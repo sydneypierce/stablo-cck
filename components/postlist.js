@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cx } from "@/utils/all";
-import { urlForImage } from "@/lib/sanity/image";
+//import { urlForImage } from "@/lib/sanity/image";
 import { parseISO, format } from "date-fns";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import CategoryLabel from "@/components/blog/category";
@@ -16,10 +16,12 @@ export default function PostList({
   fontWeight
 }) {
   const imageProps = post?.mainImage
-    ? urlForImage(post.mainImage)
+    //? urlForImage(post.mainImage)
+    ? { src: post.mainImage } // assuming it's a URL
     : null;
   const AuthorimageProps = post?.author?.image
-    ? urlForImage(post.author.image)
+    //? urlForImage(post.author.image)
+    ? { src: post.author.image } // just a URL
     : null;
   return (
     <>
@@ -42,7 +44,7 @@ export default function PostList({
                 : "aspect-square"
             )}
             href={`/post/${pathPrefix ? `${pathPrefix}/` : ""}${
-              post.slug.current
+              post.slug
             }`}>
             {imageProps ? (
               <Image
@@ -85,7 +87,7 @@ export default function PostList({
               )}>
               <Link
                 href={`/post/${pathPrefix ? `${pathPrefix}/` : ""}${
-                  post.slug.current
+                  post.slug
                 }`}>
                 <span
                   className="bg-gradient-to-r from-green-200 to-green-100 bg-[length:0px_10px] bg-left-bottom
@@ -106,7 +108,7 @@ export default function PostList({
                   <Link
                     href={`/post/${
                       pathPrefix ? `${pathPrefix}/` : ""
-                    }${post.slug.current}`}>
+                    }${post.slug}`}>
                     {post.excerpt}
                   </Link>
                 </p>
@@ -114,7 +116,7 @@ export default function PostList({
             </div>
 
             <div className="mt-3 flex items-center space-x-3 text-gray-500 dark:text-gray-400">
-              <Link href={`/author/${post?.author?.slug?.current}`}>
+              <Link href={`/author/${post?.author?.slug}`}>
                 <div className="flex items-center gap-3">
                   <div className="relative h-5 w-5 flex-shrink-0">
                     {post?.author?.image && (

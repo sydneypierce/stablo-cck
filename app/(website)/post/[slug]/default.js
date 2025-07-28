@@ -19,11 +19,13 @@ export default function Post(props) {
   }
 
   const imageProps = post?.mainImage
-    ? urlForImage(post?.mainImage)
+    //? urlForImage(post?.mainImage)
+    ? {src: post.mainImage}
     : null;
 
   const AuthorimageProps = post?.author?.image
-    ? urlForImage(post.author.image)
+    //? urlForImage(post.author.image)
+    ? {src: post.author.image}
     : null;
 
   return (
@@ -42,22 +44,18 @@ export default function Post(props) {
             <div className="flex items-center gap-3">
               <div className="relative h-10 w-10 flex-shrink-0">
                 {AuthorimageProps && (
-                  <Link href={`/author/${post.author.slug.current}`}>
-                    <Image
-                      src={AuthorimageProps.src}
-                      alt={post?.author?.name}
-                      className="rounded-full object-cover"
-                      fill
-                      sizes="40px"
-                    />
-                  </Link>
+                  <Image
+                    src={AuthorimageProps.src}
+                    alt={post?.author?.name}
+                    className="rounded-full object-cover"
+                    fill
+                    sizes="40px"
+                  />
                 )}
               </div>
               <div>
                 <p className="text-gray-800 dark:text-gray-400">
-                  <Link href={`/author/${post.author.slug.current}`}>
-                    {post.author.name}
-                  </Link>
+                  {post.author.name}
                 </p>
                 <div className="flex items-center space-x-2 text-sm">
                   <time
@@ -72,6 +70,9 @@ export default function Post(props) {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="mt-3 flex justify-center space-x-3 text-gray-400 ">
+            <p>The following post contains affiliate links. Purchasing products through these may result in the author making a small comission.</p>
           </div>
         </div>
       </Container>
@@ -91,9 +92,10 @@ export default function Post(props) {
 
       <Container>
         <article className="mx-auto max-w-screen-md ">
-          <div className="prose mx-auto my-3 dark:prose-invert prose-a:text-blue-600">
-            {post.body && <PortableText value={post.body} />}
-          </div>
+        <div
+          className="prose mx-auto my-3 dark:prose-invert prose-a:text-blue-600"
+          dangerouslySetInnerHTML={{ __html: post.body }}
+        />
           <div className="mb-7 mt-7 flex justify-center">
             <Link
               href="/"
@@ -101,7 +103,6 @@ export default function Post(props) {
               ← View all posts
             </Link>
           </div>
-          {post.author && <AuthorCard author={post.author} />}
         </article>
       </Container>
     </>

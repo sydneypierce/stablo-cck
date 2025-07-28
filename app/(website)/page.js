@@ -1,5 +1,5 @@
 import HomePage from "./home";
-import { db } from "@/firebase";
+import { db } from "@/lib/firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 export default async function IndexPage() {

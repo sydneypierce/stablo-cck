@@ -1,24 +1,26 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
 import { NextSeo } from "next-seo";
-import { urlForImage } from "@/lib/sanity/image";
 import Navbar from "@/components/navbar";
 import NavbarAlt from "@/components/navbaralt";
-import { cx } from "@/utils/all";
-// import defaultOG from "../public/img/og-default.jpg";
-
 import Footer from "@/components/footer";
-// import PopupWidget from "../components/popupWidget";
+import { cx } from "@/utils/all";
 
 export default function Layout(props) {
   const { children } = props;
-  const ogimage = urlForImage(props?.openGraphImage) ?? "";
+
+  // Use the provided image URL directly
+  const ogimage = props?.openGraphImage || "";
+
   return (
     <>
       <Head>
-        <link rel="preconnect" href="https://cdn.sanity.io/" />
-        <link rel="dns-prefetch" href="https://cdn.sanity.io//" />
+        {/* ✅ You can remove Sanity preconnects */}
       </Head>
+
+      {/* SEO Meta Tags */}
       <NextSeo
         title={props.title}
         description={props.description}
@@ -38,8 +40,8 @@ export default function Layout(props) {
           site_name: props.title
         }}
         twitter={{
-          handle: "@surjithctly",
-          site: "@surjithctly",
+          handle: "@yourhandle",
+          site: "@yourhandle",
           cardType: "summary_large_image"
         }}
       />
@@ -48,17 +50,16 @@ export default function Layout(props) {
         className={cx(
           props?.fontStyle,
           "antialiased text-gray-800 dark:bg-black dark:text-gray-400"
-        )}>
-        {props.alternate ? (
-          <NavbarAlt {...props} />
-        ) : (
-          <Navbar {...props} />
         )}
+      >
+        {/* Conditional navbar choice */}
+        {props.alternate ? <NavbarAlt {...props} /> : <Navbar {...props} />}
 
-        <div>{children}</div>
+        <main>{children}</main>
 
         <Footer {...props} />
       </div>
     </>
   );
 }
+

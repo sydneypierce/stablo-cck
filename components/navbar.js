@@ -10,7 +10,8 @@ export default function Navbar({ logoUrl }) {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "Archive", href: "/archive" }
+    { label: "Archive", href: "/archive" },
+    { label: "Recipes", href: "/recipe" }
   ];
 
   return (
